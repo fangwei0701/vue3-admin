@@ -1,9 +1,25 @@
 <template>
   <div class="lot-management">
-    <a-tabs v-model:activeKey="activeKey">
+    <a-tabs v-model:activeKey="activeKey" @change="changeTab">
       <a-tab-pane v-for="v in tabs" :key="v.value" :tab="v.label"></a-tab-pane>
     </a-tabs>
 
+    <div class="mb-md">
+      <a-dropdown placement="bottomLeft">
+        <a-button>批量操作</a-button>
+        <template #overlay>
+          <a-menu>
+            <a-menu-item v-if="activeKey === 'noShelf'">
+              <a>批量上架</a>
+            </a-menu-item>
+            <a-menu-item v-if="activeKey === 'onShelf'">
+              <a>批量下架</a>
+            </a-menu-item>
+            <a-menu-item><a>批量删除</a></a-menu-item>
+          </a-menu>
+        </template>
+      </a-dropdown>
+    </div>
     <a-table
       :columns="table.columns"
       :data-source="table.list"
@@ -112,6 +128,12 @@ const table = reactive<LogMangementTable>({
 const onSelectChange = (keys: string[], rows: LogMangementList[]): void => {
   table.selectedRow = rows;
   table.selectedRowKeys = keys;
+};
+
+// 切换tab
+const changeTab = () => {
+  table.selectedRow = [];
+  table.selectedRowKeys = [];
 };
 
 // 删除
