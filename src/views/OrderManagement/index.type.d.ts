@@ -21,3 +21,9 @@ export interface OrderMangementTable {
   columns: TableColumnType[];
   list: OrderMangementList[];
 }
+
+export interface OrderForm {
+  orderNo: string;
+  orderStatus: string;
+  payMethed: string;
+}
